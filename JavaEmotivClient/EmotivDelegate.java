@@ -2,6 +2,11 @@ import org.java_websocket.client.WebSocketClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * EmotivDelegate follows CortexAPI protocol to set up a connection
+ *
+ * @see <a href="https://emotiv.gitbook.io/cortex-api/">Cortex API</a>
+ */
 public class EmotivDelegate {
 
     public static final String CLIENT_ID = "";
