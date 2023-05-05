@@ -4,7 +4,9 @@ import org.json.JSONObject;
 
 /**
  * EmotivDelegate follows CortexAPI protocol to set up a connection
- *
+ * 
+ * @author javiersgs
+ * @version 0.1
  * @see <a href="https://emotiv.gitbook.io/cortex-api/">Cortex API</a>
  */
 public class EmotivDelegate {
