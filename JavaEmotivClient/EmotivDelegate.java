@@ -4,8 +4,8 @@ import org.json.JSONObject;
 
 public class EmotivDelegate {
 
-    public static final String CLIENT_ID = "dYvuSFLyPj87WKphZZEZrE7rAwiZv5r390bMPCKK";
-    public static final String CLIENT_SECRET = "cRjefI0seoDCs9G2gPGwC8ctIKy19DbGHMUm9GbYqEpycOhYG7echQFf1K89mFdE8W61cZ4jvcU6So6rSBWisjFtBZi6AYfYIWTn8vibgcllDlLcYgwWOs0E9sz5LKS6";
+    public static final String CLIENT_ID = "";
+    public static final String CLIENT_SECRET = "";
 
     private boolean subscribed = false;
     private String cortexToken = null;
