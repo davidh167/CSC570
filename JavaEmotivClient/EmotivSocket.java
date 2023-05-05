@@ -9,6 +9,13 @@ import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * EmotivSocket is a WebSocket client that connects to the Emotiv server.
+ * It is used to send requests to the Emotiv server and receive responses.
+ * 
+ *  @author javiersgs
+ *  @version 0.1
+ */
 public class EmotivSocket extends WebSocketClient {
 
     private EmotivDelegate delegate;
