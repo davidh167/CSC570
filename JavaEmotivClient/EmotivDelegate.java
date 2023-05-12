@@ -11,8 +11,8 @@ import org.json.JSONObject;
  */
 public class EmotivDelegate {
 
-    public static final String CLIENT_ID = "";
-    public static final String CLIENT_SECRET = "";
+    public static final String CLIENT_ID = "a6HZ725hPFrmMZQjc4HqvmwPzC7hTu2Q0NBMyozH";
+    public static final String CLIENT_SECRET = "a6jCyDKg06tBVUPN2bVEn4aZFkmjtSc4Pup5UD5HKQl00mfoapey84aoZAIrppRj7tYBKtdOD46eya2HKrXxyKc28F6pGoIt9rvu5YC8vqWPxWCKNlyB1XLqoV1yjzbF";
 
     private boolean subscribed = false;
     private String cortexToken = null;
@@ -49,8 +49,10 @@ public class EmotivDelegate {
         message.put("jsonrpc", "2.0");
         message.put("method", "authorize");
         JSONObject params = new JSONObject();
-        params.put("clientId", "dYvuSFLyPj87WKphZZEZrE7rAwiZv5r390bMPCKK");
-        params.put("clientSecret", "cRjefI0seoDCs9G2gPGwC8ctIKy19DbGHMUm9GbYqEpycOhYG7echQFf1K89mFdE8W61cZ4jvcU6So6rSBWisjFtBZi6AYfYIWTn8vibgcllDlLcYgwWOs0E9sz5LKS6");
+//        params.put("clientId", "dYvuSFLyPj87WKphZZEZrE7rAwiZv5r390bMPCKK");
+//        params.put("clientSecret", "cRjefI0seoDCs9G2gPGwC8ctIKy19DbGHMUm9GbYqEpycOhYG7echQFf1K89mFdE8W61cZ4jvcU6So6rSBWisjFtBZi6AYfYIWTn8vibgcllDlLcYgwWOs0E9sz5LKS6");
+        params.put("clientId", "a6HZ725hPFrmMZQjc4HqvmwPzC7hTu2Q0NBMyozH");
+        params.put("clientSecret", "a6jCyDKg06tBVUPN2bVEn4aZFkmjtSc4Pup5UD5HKQl00mfoapey84aoZAIrppRj7tYBKtdOD46eya2HKrXxyKc28F6pGoIt9rvu5YC8vqWPxWCKNlyB1XLqoV1yjzbF");
         params.put("debit", 1);
         message.put("params", params);
         ws.send(message.toString());

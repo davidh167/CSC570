@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.security.cert.X509Certificate;
 import javax.net.ssl.SSLContext;
@@ -9,6 +11,15 @@ import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+//package com.mkyong.io.csv.opencsv;
+import com.opencsv.CSVWriter;
+
+import java.io.FileWriter;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * EmotivSocket is a WebSocket client that connects to the Emotiv server.
  * It is used to send requests to the Emotiv server and receive responses.
@@ -18,6 +29,8 @@ import org.json.JSONObject;
  */
 public class EmotivSocket extends WebSocketClient {
 
+    private int messageCount = 0;
+    List<String[]> temp  = new ArrayList<>();
     private EmotivDelegate delegate;
 
     private static final TrustManager[] trustAllCerts = new TrustManager[]{
@@ -52,15 +65,19 @@ public class EmotivSocket extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
+
         System.out.println("Received message from Emotiv server.");
         if (!delegate.isSubscribed()) {
             JSONObject response = new JSONObject(message);
             int id = response.getInt("id");
+//            System.out.println(response);
             Object result = response.get("result");
             delegate.handle (id, result, this);
         } else {
-            float time = new JSONObject(message).getFloat("time");
+            BigDecimal time = new JSONObject(message).getBigDecimal("time");
             JSONObject object = new JSONObject(message);
+            System.out.println(object);
+            System.out.println(time);
             JSONArray array = null;
             if ((object.keySet()).contains("fac")) {
                 array = object.getJSONArray("fac");
@@ -69,7 +86,70 @@ public class EmotivSocket extends WebSocketClient {
             } else if ((object.keySet()).contains("met")) {
                 array = object.getJSONArray("met");
             }
+            // if fac refers to facial expression, and met refers to mental state, what does dev refer to?
             System.out.println(time + " :: " + array);
+
+
+//            ArrayList<String> temp1 = new ArrayList<>();
+            ArrayList<String> temp2 = new ArrayList<>();
+//            temp2.addAll(temp2);
+//            BigDecimal bd = (BigDecimal) array.get(i);
+            time = time.setScale(8);
+            temp2.add(time.toString());
+            for(int i=0;i< array.length() ;i++){
+                System.out.println(array.get(i));
+                if(array.get(i) instanceof Boolean) {
+                    if ((Boolean) array.get(i)) {
+                        temp2.add("true");
+                    } else {
+                        temp2.add("false");
+                    }
+                }else if(array.get(i) instanceof BigDecimal){
+                    BigDecimal bd = (BigDecimal) array.get(i);
+//                    bd = bd.setScale(8);
+//                    System.out.println(bd.toString());
+//                    System.out.println(String.valueOf(bd));
+                    temp2.add(bd.toString());
+                }else {
+
+                    temp2.add((String) array.get(i));
+                }
+            }
+
+            messageCount++;
+            if(messageCount == 7){
+//                temp.add((String[]) temp2.toArray());
+                String[] list = new String[temp2.size()];
+                for(int i = 0; i < temp2.size(); i++){
+                    list[i] = temp2.get(i);
+                }
+
+                temp.add(list);
+
+                try{
+                    File file = new File("./eeg.csv");
+                    FileWriter outputfile = new FileWriter(file);
+                    CSVWriter writer = new CSVWriter(outputfile);
+                    writer.writeAll(temp);
+                    writer.close();
+                    System.out.println("WRITTEN");
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                // Write to file
+            }else if(messageCount < 7){
+                // simply keep adding to array
+                String[] list = new String[temp2.size()];
+                for(int i = 0; i < temp2.size(); i++){
+                    list[i] = temp2.get(i);
+                }
+
+                temp.add(list);
+            }
+
+
+//            System.out.println(time + " :: " + array);
         }
     }
 
