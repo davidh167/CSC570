@@ -20,18 +20,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+
 /**
  * EmotivSocket is a WebSocket client that connects to the Emotiv server.
  * It is used to send requests to the Emotiv server and receive responses.
- * 
+ *
+ *  Forked from CSC 570 git repo by javiersgs
  *  @author javiersgs
+ *  @author dh435
  *  @version 0.1
  */
+
 public class EmotivSocket extends WebSocketClient {
 
     private int messageCount = 0;
     List<String[]> temp  = new ArrayList<>();
-    private EmotivDelegate delegate;
+    private EnhancedDelegate delegate;
 
     private static final TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
@@ -47,7 +52,7 @@ public class EmotivSocket extends WebSocketClient {
             }
     };
 
-    public EmotivSocket(URI serverURI, EmotivDelegate delegate) throws Exception {
+    public EmotivSocket(URI serverURI, EnhancedDelegate delegate) throws Exception {
         super(serverURI);
         this.delegate = delegate;
         // Disable SSL certificate validation to allow self-signed certificates
@@ -89,15 +94,11 @@ public class EmotivSocket extends WebSocketClient {
             // if fac refers to facial expression, and met refers to mental state, what does dev refer to?
             System.out.println(time + " :: " + array);
 
-
-//            ArrayList<String> temp1 = new ArrayList<>();
             ArrayList<String> temp2 = new ArrayList<>();
-//            temp2.addAll(temp2);
-//            BigDecimal bd = (BigDecimal) array.get(i);
             time = time.setScale(8);
             temp2.add(time.toString());
             for(int i=0;i< array.length() ;i++){
-                System.out.println(array.get(i));
+//                System.out.println(array.get(i));
                 if(array.get(i) instanceof Boolean) {
                     if ((Boolean) array.get(i)) {
                         temp2.add("true");
@@ -106,9 +107,6 @@ public class EmotivSocket extends WebSocketClient {
                     }
                 }else if(array.get(i) instanceof BigDecimal){
                     BigDecimal bd = (BigDecimal) array.get(i);
-//                    bd = bd.setScale(8);
-//                    System.out.println(bd.toString());
-//                    System.out.println(String.valueOf(bd));
                     temp2.add(bd.toString());
                 }else {
 
@@ -116,9 +114,9 @@ public class EmotivSocket extends WebSocketClient {
                 }
             }
 
+            // CSV writer code
             messageCount++;
             if(messageCount == 7){
-//                temp.add((String[]) temp2.toArray());
                 String[] list = new String[temp2.size()];
                 for(int i = 0; i < temp2.size(); i++){
                     list[i] = temp2.get(i);
@@ -138,18 +136,17 @@ public class EmotivSocket extends WebSocketClient {
                     e.printStackTrace();
                 }
                 // Write to file
-            }else if(messageCount < 7){
+            }else if(messageCount < 7) {
                 // simply keep adding to array
                 String[] list = new String[temp2.size()];
-                for(int i = 0; i < temp2.size(); i++){
+                for (int i = 0; i < temp2.size(); i++) {
                     list[i] = temp2.get(i);
                 }
-
                 temp.add(list);
             }
+            // End csv writer code
 
 
-//            System.out.println(time + " :: " + array);
         }
     }
 
