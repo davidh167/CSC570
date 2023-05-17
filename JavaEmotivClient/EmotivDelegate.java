@@ -106,7 +106,7 @@ public class EmotivDelegate {
             params.put("cortexToken", cortexToken);
             params.put("session", session);
             params.put("streams", new JSONArray().put("met"));
-            // "met" is for emotion, "dev" is for dev mode, "fac" is for facial gestures
+            // "met" is for mental state or emotion, "dev" is for device mode, "fac" is for facial gestures/expression
             message.put("params", params);
             ws.send(message.toString());
         }

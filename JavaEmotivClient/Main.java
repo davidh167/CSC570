@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         EnhancedDelegate delegate = new EnhancedDelegate();
         URI uri = new URI("wss://localhost:6868");
-        EmotivSocket ws = new EmotivSocket(uri, delegate);
+        PADSocket ws = new PADSocket(uri, delegate);
         ws.connect();
     }
 }

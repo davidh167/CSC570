@@ -34,9 +34,9 @@ import java.util.List;
 
 public class EmotivSocket extends WebSocketClient {
 
-    private int messageCount = 0;
-    List<String[]> temp  = new ArrayList<>();
-    private EnhancedDelegate delegate;
+//    private int messageCount = 0;
+//    List<String[]> temp  = new ArrayList<>();
+EnhancedDelegate delegate;
 
     private static final TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
@@ -75,14 +75,14 @@ public class EmotivSocket extends WebSocketClient {
         if (!delegate.isSubscribed()) {
             JSONObject response = new JSONObject(message);
             int id = response.getInt("id");
-//            System.out.println(response);
+            System.out.println(response);
             Object result = response.get("result");
             delegate.handle (id, result, this);
         } else {
             BigDecimal time = new JSONObject(message).getBigDecimal("time");
             JSONObject object = new JSONObject(message);
-            System.out.println(object);
-            System.out.println(time);
+//            System.out.println(object);
+//            System.out.println(time);
             JSONArray array = null;
             if ((object.keySet()).contains("fac")) {
                 array = object.getJSONArray("fac");
@@ -94,57 +94,61 @@ public class EmotivSocket extends WebSocketClient {
             // if fac refers to facial expression, and met refers to mental state, what does dev refer to?
             System.out.println(time + " :: " + array);
 
-            ArrayList<String> temp2 = new ArrayList<>();
-            time = time.setScale(8);
-            temp2.add(time.toString());
-            for(int i=0;i< array.length() ;i++){
-//                System.out.println(array.get(i));
-                if(array.get(i) instanceof Boolean) {
-                    if ((Boolean) array.get(i)) {
-                        temp2.add("true");
-                    } else {
-                        temp2.add("false");
-                    }
-                }else if(array.get(i) instanceof BigDecimal){
-                    BigDecimal bd = (BigDecimal) array.get(i);
-                    temp2.add(bd.toString());
-                }else {
 
-                    temp2.add((String) array.get(i));
-                }
-            }
 
-            // CSV writer code
-            messageCount++;
-            if(messageCount == 7){
-                String[] list = new String[temp2.size()];
-                for(int i = 0; i < temp2.size(); i++){
-                    list[i] = temp2.get(i);
-                }
+//            ArrayList<String> temp2 = new ArrayList<>();
+//            time = time.setScale(8);
+//            temp2.add(time.toString());
+//            for(int i=0;i< array.length() ;i++){
+////                System.out.println(array.get(i));
+//                if(array.get(i) instanceof Boolean) {
+//                    if ((Boolean) array.get(i)) {
+//                        temp2.add("true");
+//                    } else {
+//                        temp2.add("false");
+//                    }
+//                }else if(array.get(i) instanceof BigDecimal){
+//                    BigDecimal bd = (BigDecimal) array.get(i);
+//                    temp2.add(bd.toString());
+//                }else {
+//
+//                    temp2.add((String) array.get(i));
+//                }
+//            }
 
-                temp.add(list);
 
-                try{
-                    File file = new File("./eeg.csv");
-                    FileWriter outputfile = new FileWriter(file);
-                    CSVWriter writer = new CSVWriter(outputfile);
-                    writer.writeAll(temp);
-                    writer.close();
-                    System.out.println("WRITTEN");
 
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                // Write to file
-            }else if(messageCount < 7) {
-                // simply keep adding to array
-                String[] list = new String[temp2.size()];
-                for (int i = 0; i < temp2.size(); i++) {
-                    list[i] = temp2.get(i);
-                }
-                temp.add(list);
-            }
-            // End csv writer code
+//            // CSV writer code
+//            messageCount++;
+//            if(messageCount == 7){
+//                String[] list = new String[temp2.size()];
+//                for(int i = 0; i < temp2.size(); i++){
+//                    list[i] = temp2.get(i);
+//                }
+//
+//                temp.add(list);
+//
+//                try{
+//                    File file = new File("./eeg.csv");
+//                    FileWriter outputfile = new FileWriter(file);
+//                    CSVWriter writer = new CSVWriter(outputfile);
+//                    writer.writeAll(temp);
+//                    writer.close();
+//                    System.out.println("WRITTEN");
+//
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//                // Write to file
+//            }else if(messageCount < 7) {
+//                // simply keep adding to array
+//                String[] list = new String[temp2.size()];
+//                for (int i = 0; i < temp2.size(); i++) {
+//                    list[i] = temp2.get(i);
+//                }
+//                temp.add(list);
+//            }
+//            // End csv writer code
 
 
         }

@@ -1,0 +1,34 @@
+Connected to Emotiv server: wss://localhost:6868
+Handle: 0
+getCortexInfo: done!
+Received message from Emotiv server.
+{"result":{"cortexLogFolderPath":"C:/ProgramData/Emotiv/Cortex/v2/logs/CortexService","buildDate":"2023-05-09T15:23:04","cloudSyncLogFolderPath":"C:/ProgramData/Emotiv/Cortex/v2/logs/CortexSync","buildNumber":"382161c","version":"3.5.3.384"},"id":1,"jsonrpc":"2.0"}
+Handle: 1
+requestAccess: done!
+Received message from Emotiv server.
+{"result":{"accessGranted":true,"message":"The user has granted access right to this application."},"id":2,"jsonrpc":"2.0"}
+Handle: 2
+authorize: done!
+Received message from Emotiv server.
+{"result":{"cortexToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImNvbS5kaGVybjE2Ny5jc2M1NzAiLCJhcHBWZXJzaW9uIjoiMS4wLjAiLCJleHAiOjE2ODQ0NjkwMTUsIm5iZiI6MTY4NDIwOTgxNSwidXNlcklkIjoiZmM4YzYzNjMtMTAyYi00MjY3LWJmNGEtNGI0MmNlNWYwMjUzIiwidXNlcm5hbWUiOiJkaGVybjE2NyIsInZlcnNpb24iOiIyLjAifQ.hBFELIojfDm9SXkOlAJ1SctOGFfDip0lIe4pTO-06bM"},"id":3,"jsonrpc":"2.0"}
+Handle: 3
+getUserInformation
+Received message from Emotiv server.
+{"result":{"firstName":"David","lastName":"Hernandez","licenseAgreement":{"licenseUrl":"https://cerebrum.emotivcloud.com/api/privacy/doc/eula/","accepted":true},"username":"dhern167"},"id":4,"jsonrpc":"2.0"}
+Handle: 4
+>>>> getUserInformation: {"firstName":"David","lastName":"Hernandez","licenseAgreement":{"licenseUrl":"https://cerebrum.emotivcloud.com/api/privacy/doc/eula/","accepted":true},"username":"dhern167"}
+queryHeadsets
+Received message from Emotiv server.
+{"result":[{"settings":{"mode":"INSIGHT","eegRes":14,"memsRes":14,"eegRate":128,"memsRate":64},"motionSensors":["Q0","Q1","Q2","Q3","ACCX","ACCY","ACCZ","MAGX","MAGY","MAGZ"],"isDfuMode":false,"connectedBy":"bluetooth","dongle":"0","customName":"Simulated Device 1","sensors":["AF3","T7","Pz","T8","AF4"],"headbandPosition":null,"dfuTypes":["dfuNone"],"firmwareDisplay":"0x0931","id":"INSIGHT-D23AAECD","isVirtual":true,"firmware":"931","virtualHeadsetId":"d23aaecd-7d13-48e6-8b26-1c9a449fa117","status":"connected"}],"id":5,"jsonrpc":"2.0"}
+Handle: 5
+createSession
+Received message from Emotiv server.
+{"result":{"owner":"dhern167","license":"9f7befe3-238f-46e2-94db-4f301721e709","stopped":"","headset":{"settings":{"mode":"INSIGHT","eegRes":14,"memsRes":14,"eegRate":128,"memsRate":64},"motionSensors":["Q0","Q1","Q2","Q3","ACCX","ACCY","ACCZ","MAGX","MAGY","MAGZ"],"isDfuMode":false,"connectedBy":"bluetooth","dongle":"0","sensors":["AF3","T7","Pz","T8","AF4"],"dfuTypes":["dfuNone"],"firmwareDisplay":"0x0931","id":"INSIGHT-D23AAECD","isVirtual":true,"firmware":"931","virtualHeadsetId":"d23aaecd-7d13-48e6-8b26-1c9a449fa117","status":"connected"},"appId":"com.dhern167.csc570","performanceMetrics":[{"apiName":"eng","displayedName":"Engagement","name":"engagement","shortDisplayedName":"En"},{"apiName":"exc","displayedName":"Excitement","name":"excitement","shortDisplayedName":"Ex"},{"apiName":"str","displayedName":"Stress","name":"stress","shortDisplayedName":"St"},{"apiName":"rel","displayedName":"Relaxation","name":"relaxation","shortDisplayedName":"Re"},{"apiName":"int","displayedName":"Interest","name":"interest","shortDisplayedName":"In"},{"apiName":"foc","displayedName":"Focus","name":"focus","shortDisplayedName":"Fo"}],"streams":[],"recording":false,"started":"2023-05-16T21:03:35.179-07:00","id":"911ac95f-2468-42a8-8a5b-3b583fb7d31d","recordIds":[],"status":"activated"},"id":6,"jsonrpc":"2.0"}
+Handle: 6
+subscribe
+Received message from Emotiv server.
+{"result":{"failure":[],"success":[{"cols":["eng.isActive","eng","exc.isActive","exc","lex","str.isActive","str","rel.isActive","rel","int.isActive","int","foc.isActive","foc"],"streamName":"met","sid":"911ac95f-2468-42a8-8a5b-3b583fb7d31d"}]},"id":7,"jsonrpc":"2.0"}
+Handle: 7
+Received message from Emotiv server.
+{"time":1684296219.5152,"met":[true,0.536594,true,0.581929,0,true,0.597126,true,0.534668,true,0.560803,true,0.586493],"sid":"911ac95f-2468-42a8-8a5b-3b583fb7d31d"}
+1684296219.5152
