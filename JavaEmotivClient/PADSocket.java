@@ -1,28 +1,11 @@
-import javax.net.ssl.SSLContext;
 import java.net.URI;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
-import java.net.URI;
-import java.security.cert.X509Certificate;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-//package com.mkyong.io.csv.opencsv;
-import com.opencsv.CSVWriter;
-
-import java.io.FileWriter;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 
 public class PADSocket extends EmotivSocket{
 
