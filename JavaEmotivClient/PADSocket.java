@@ -45,8 +45,8 @@ public class PADSocket extends EmotivSocket{
         } else {
             BigDecimal time = new JSONObject(message).getBigDecimal("time");
             JSONObject object = new JSONObject(message);
-            System.out.println(object);
-            System.out.println(time);
+//            System.out.println(object);
+//            System.out.println(time);
             JSONArray array = null;
             if ((object.keySet()).contains("fac")) {
                 array = object.getJSONArray("fac");
@@ -77,6 +77,13 @@ public class PADSocket extends EmotivSocket{
                     temp2.add((String) array.get(i));
                 }
             }
+
+            // Formatted Vector ^
+
+            // Calculate PAD value in separate class
+            PadVector vector = new PadVector(temp2);
+            System.out.println(vector);
+
 
 
 
