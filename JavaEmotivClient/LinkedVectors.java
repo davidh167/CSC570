@@ -1,24 +1,27 @@
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.LinkedList;
 
-public static class LinkedVectors implements Runnable{
-    private LinkedList<PadVector> head;
+public class LinkedVectors implements Runnable{
+    private static LinkedList<PadVector> stack;
 
     public LinkedVectors(){
-        head = new LinkedList<>();
+        stack = new LinkedList<>();
     }
 
-    public void pushVector(PadVector vector){
-        head.push(vector);
+    public static void pushVector(PadVector vector){
+        stack.push(vector);
     }
 
-    public void popVector(){
-        head.pop();
+    public static PadVector popVector(){
+        return stack.pop();
+    }
+
+    public static int size(){
+        return stack.size();
     }
 
     @Override
     public String toString(){
-        return head.toString();
+        return stack.toString();
     }
 
     @Override

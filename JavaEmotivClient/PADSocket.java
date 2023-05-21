@@ -66,6 +66,7 @@ public class PADSocket extends EmotivSocket{
             // Calculate PAD value in separate class
             PadVector vector = new PadVector(temp2);
             System.out.println(vector);
+            LinkedVectors.pushVector(vector);
 
 
 

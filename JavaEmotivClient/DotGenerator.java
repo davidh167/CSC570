@@ -3,10 +3,6 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.geometry.Sphere;
 
 import javax.media.j3d.BranchGroup;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
@@ -158,21 +154,20 @@ public class DotGenerator implements Runnable {
 		}
 
 	}
-
-	public static void main(String[] args) {
-
-		System.setProperty("sun.awt.noerasebackground", "true");
-
-		ArrayList<String> places = new ArrayList<>(Arrays.asList("1684630130.87430000", "true", "0.54134", "true", "0.470717", "0.0", "true", "0.455599", "true", "0.495421", "true", "0.416905", "true", "0.393129"));
-		ArrayList<String> places2 = new ArrayList<>(Arrays.asList("168123430.87430000", "true", "0.2", "true", "0.2", "0.0", "true", "0.2", "true", "0.1", "true", "0.1", "true", "0.1"));
-		PadVector pad = new PadVector(places);
-		PadVector pad2 = new PadVector(places2);
-		LinkedVectors instance = new LinkedVectors();
-		LinkedVectors.pushVector(pad);
-		LinkedVectors.pushVector(pad2);
-		DotGenerator dotGenerator = DotGenerator.getInstance();
-		
-		Thread generatorThread = new Thread(dotGenerator);
-		generatorThread.start();
-	}
+//	public static void main(String[] args) {
+//
+//		System.setProperty("sun.awt.noerasebackground", "true");
+//
+//		ArrayList<String> places = new ArrayList<>(Arrays.asList("1684630130.87430000", "true", "0.54134", "true", "0.470717", "0.0", "true", "0.455599", "true", "0.495421", "true", "0.416905", "true", "0.393129"));
+//		ArrayList<String> places2 = new ArrayList<>(Arrays.asList("168123430.87430000", "true", "0.2", "true", "0.2", "0.0", "true", "0.2", "true", "0.1", "true", "0.1", "true", "0.1"));
+//		PadVector pad = new PadVector(places);
+//		PadVector pad2 = new PadVector(places2);
+//		LinkedVectors instance = new LinkedVectors();
+//		LinkedVectors.pushVector(pad);
+//		LinkedVectors.pushVector(pad2);
+//		DotGenerator dotGenerator = DotGenerator.getInstance();
+//
+//		Thread generatorThread = new Thread(dotGenerator);
+//		generatorThread.start();
+//	}
 }

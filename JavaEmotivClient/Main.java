@@ -12,6 +12,12 @@ public class Main {
         EnhancedDelegate delegate = new EnhancedDelegate();
         URI uri = new URI("wss://localhost:6868");
         PADSocket ws = new PADSocket(uri, delegate);
+        System.setProperty("sun.awt.noerasebackground", "true");
+        LinkedVectors stack = new LinkedVectors();
+        DotGenerator dotGenerator = DotGenerator.getInstance();
+        Thread generatorThread = new Thread(dotGenerator);
+
         ws.connect();
+        generatorThread.start();
     }
 }
