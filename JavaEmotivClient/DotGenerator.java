@@ -3,21 +3,8 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import com.sun.j3d.utils.geometry.Sphere;
 
-import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Alpha;
-import javax.media.j3d.Appearance;
-import javax.media.j3d.BoundingSphere;
-import javax.media.j3d.ColoringAttributes;
-import javax.media.j3d.LineArray;
-import javax.media.j3d.Shape3D;
-import javax.vecmath.AxisAngle4d;
-import javax.vecmath.Color3f;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import javax.media.j3d.Transform3D;
-import javax.media.j3d.TransformGroup;
-import javax.media.j3d.TransparencyAttributes;
-import javax.media.j3d.TransparencyInterpolator;
+import javax.media.j3d.*;
+import javax.vecmath.*;
 
 public class DotGenerator implements Runnable {
 	private static DotGenerator instance;
@@ -73,8 +60,19 @@ public class DotGenerator implements Runnable {
 			dotColor = new Color3f(.47f, .23f, .11f);
 		}
 		ColoringAttributes dotColorAttr = new ColoringAttributes(dotColor, ColoringAttributes.SHADE_GOURAUD);
+
+		//Create the colours for the material
+		Color3f ambientColour = dotColor;
+		Color3f diffuseColour = dotColor;
+		Color3f specularColour = new Color3f(1.0f, 1.0f, 1.0f);
+		Color3f emissiveColour = new Color3f(0.0f, 0.0f, 0.0f);
+		//Define the shininess
+		float shininess = 10.0f;
+
 		Appearance dotAppearance = new Appearance();
 		dotAppearance.setColoringAttributes(dotColorAttr);
+		dotAppearance.setMaterial(new Material(ambientColour, emissiveColour,
+				diffuseColour, specularColour, shininess));
 
 		// Set transparency *not working
 		Alpha alpha = new Alpha(1, Alpha.DECREASING_ENABLE, (long) 0, (long) 0, (long) 10, (long) 0, (long) 10,
@@ -145,6 +143,21 @@ public class DotGenerator implements Runnable {
 		// Add the axis shape to the scene
 		scene.addChild(axisTransformGroup);
 
+		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0),
+				100.0);
+		//Set up the ambient light
+		Color3f ambient = new Color3f(0.2f, 0.2f, 0.2f);
+		AmbientLight ambientLight = new AmbientLight(ambient);
+		ambientLight.setInfluencingBounds(bounds);
+		//Set up the directional light
+		Color3f lightColour = new Color3f(1.0f, 1.0f, 1.0f);
+		Vector3f lightDir = new Vector3f(0.0f, 0.0f, -1.0f);
+		DirectionalLight light = new DirectionalLight(lightColour, lightDir);
+		light.setInfluencingBounds(bounds);
+		//Add the lights to the BranchGroup
+		scene.addChild(ambientLight);
+		scene.addChild(light);
+
 		universe.getViewingPlatform().setNominalViewingTransform();
 		universe.addBranchGraph(scene);
 	}
@@ -168,20 +181,4 @@ public class DotGenerator implements Runnable {
 		}
 
 	}
-//	public static void main(String[] args) {
-//
-//		System.setProperty("sun.awt.noerasebackground", "true");
-//
-//		ArrayList<String> places = new ArrayList<>(Arrays.asList("1684630130.87430000", "true", "0.54134", "true", "0.470717", "0.0", "true", "0.455599", "true", "0.495421", "true", "0.416905", "true", "0.393129"));
-//		ArrayList<String> places2 = new ArrayList<>(Arrays.asList("168123430.87430000", "true", "0.2", "true", "0.2", "0.0", "true", "0.2", "true", "0.1", "true", "0.1", "true", "0.1"));
-//		PadVector pad = new PadVector(places);
-//		PadVector pad2 = new PadVector(places2);
-//		LinkedVectors instance = new LinkedVectors();
-//		LinkedVectors.pushVector(pad);
-//		LinkedVectors.pushVector(pad2);
-//		DotGenerator dotGenerator = DotGenerator.getInstance();
-//
-//		Thread generatorThread = new Thread(dotGenerator);
-//		generatorThread.start();
-//	}
 }
