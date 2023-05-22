@@ -1,3 +1,4 @@
+import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import com.sun.j3d.utils.geometry.Sphere;
@@ -50,17 +51,26 @@ public class DotGenerator implements Runnable {
 		double y = vector.pad.get(1);
 		double z = vector.pad.get(2);
 		Vector3d position = new Vector3d(x,y,z);
+		System.out.println(position);
 		
-		// Set the dot appearance (color)
-		// goes from white -> grey depending on pos/neg
+		// Set the dot appearance (color) depending on quadrant
 		Color3f dotColor;
-		if(x>0 && y>0 && z>0) {
+		if(x>0 && y>0 && z>0) { // (+,+,+) white
 			dotColor = new Color3f(1.0f, 1.0f, 1.0f);
-		}
-		else if (x<0 && y<0 && z<0) {
-			dotColor = new Color3f(.5f, .5f, .5f);
-		} else {
-			dotColor = new Color3f(.75f, .75f, .75f);
+		} else if (x>0 && y>0 && z<0) { // (+,+,-) bright magenta
+			dotColor = new Color3f(.76f, .0f, .71f);
+		} else if (x>0 && y<0 && z>0) { // (+,-,+) light pink
+			dotColor = new Color3f(.93f, .78f, .93f);
+		} else if (x>0 && y<0 && z<0) { // (+,-,-)  dark blue
+			dotColor = new Color3f(.0f, .05f, .64f);
+		} else if (x<0 && y>0 && z>0) { // (-,+,+) light blue
+			dotColor = new Color3f(.51f, .81f, .99f);
+		} else if (x<0 && y>0 && z<0) { // (-,+,-) dark green
+			dotColor = new Color3f(.17f, .45f, .13f);
+		} else if (x<0 && y<0 && z>0) { // (-,-,+) light green
+			dotColor = new Color3f(.59f, 1.0f, .67f);
+		} else { // (-,-,-) dark orange
+			dotColor = new Color3f(.47f, .23f, .11f);
 		}
 		ColoringAttributes dotColorAttr = new ColoringAttributes(dotColor, ColoringAttributes.SHADE_GOURAUD);
 		Appearance dotAppearance = new Appearance();
@@ -79,7 +89,12 @@ public class DotGenerator implements Runnable {
 		// Create a TransformGroup for the Sphere
 		Transform3D dotTransform = new Transform3D();
 		TransformGroup dotTransformGroup = new TransformGroup();
-		dotTransform.setTranslation(position);
+		//dotTransform.setTranslation(position);
+		double angle = -(Math.PI/6); // Angle in radians
+		Vector3d axis = new Vector3d(0, 1, 0); // Rotation axis (here, y-axis)
+		dotTransform.setRotation(new AxisAngle4d(axis, angle));
+		Vector3d cameraPosition = new Vector3d(0, -0.075, 0);
+		dotTransform.setTranslation(new Vector3d(position.x, position.y + cameraPosition.y, position.z));
 
 		dotTransformGroup.setTransform(dotTransform);
 		dotTransformGroup.addChild(dot);
@@ -118,18 +133,17 @@ public class DotGenerator implements Runnable {
 		Shape3D axisShape = new Shape3D(axisLines);
 
 		Transform3D axisTransform = new Transform3D();
-		double angle = Math.PI / 3.0; // Angle in radians
+		double angle = -(Math.PI/6); // Angle in radians
 		Vector3d axis = new Vector3d(0, 1, 0); // Rotation axis (here, y-axis)
 		axisTransform.setRotation(new AxisAngle4d(axis, angle));
-		Vector3d cameraPosition = new Vector3d(0, -0.1, 0);
+		Vector3d cameraPosition = new Vector3d(0, -0.075, 0);
 		axisTransform.setTranslation(cameraPosition);
 
 		axisTransformGroup.setTransform(axisTransform);
 		axisTransformGroup.addChild(axisShape);
+
 		// Add the axis shape to the scene
 		scene.addChild(axisTransformGroup);
-
-		/////////////////////////////////////////////////////////////////////////////
 
 		universe.getViewingPlatform().setNominalViewingTransform();
 		universe.addBranchGraph(scene);
@@ -137,9 +151,9 @@ public class DotGenerator implements Runnable {
 
 	@Override
 	public void run() {
+		drawAxis();
 		while (true) {
 			
-			drawAxis();
 			// Set the dot's position with stack values
 			for (int i = 0; i < LinkedVectors.size(); i++) {
 				drawDot();
