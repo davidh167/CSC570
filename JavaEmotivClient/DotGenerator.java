@@ -67,7 +67,7 @@ public class DotGenerator implements Runnable {
 		Color3f specularColour = new Color3f(1.0f, 1.0f, 1.0f);
 		Color3f emissiveColour = new Color3f(0.0f, 0.0f, 0.0f);
 		//Define the shininess
-		float shininess = 10.0f;
+		float shininess = 100.0f;
 
 		Appearance dotAppearance = new Appearance();
 		dotAppearance.setColoringAttributes(dotColorAttr);
